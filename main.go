@@ -11,9 +11,6 @@ func main() {
 	var todos = []Todo{
 		{ID: 1, Task: "Learn Go"},
 	}
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "pong"})
-	})
 	r.GET("/todos", func(c *gin.Context) {
 		c.JSON(http.StatusOK, todos)
 	})
