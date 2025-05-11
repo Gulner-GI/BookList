@@ -1,0 +1,49 @@
+version: '3'
+
+tasks:
+  get:
+    desc: "Получить все todos"
+    cmds:
+      - curl -s -X GET http://localhost:8080/Todos
+
+  get_id:
+    desc: "Получить todo по ID"
+    vars:
+      id:
+        default:1
+    cmds:
+      - curl -s -X GET "http://localhost:8080/Todos?id={{ .ID }}"
+
+  create:
+    desc: "Создать новую задачу"
+    vars:
+      task:
+        default:"Новая задача"
+    cmds:
+      - >
+        curl -s -X POST http://localhost:8080/Todos \
+        -H "Content-Type: application/json" \
+        -d "{\"task\":\"{{ .TASK }}\",\"done\":false}"
+
+  update:
+    desc: "Обновить задачу"
+    vars:
+      id:
+        default:1
+      task:
+        default:""
+      done:
+        default:false
+    cmds:
+      - >
+        curl -s -X PATCH http://localhost:8080/Todos/{{ .ID }}
+        -H "Content-Type: application/json"
+        -d "{\"task\":\"{{ .TASK }}\",\"done\":{{ .DONE }}}"
+
+  delete:
+    desc: "Удалить задачу по ID"
+    vars:
+      id:
+        default:1
+    cmds:
+      - curl -s -X DELETE http://localhost:8080/Todos/{{ .ID }}

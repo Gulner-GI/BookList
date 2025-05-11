@@ -83,7 +83,7 @@ func DeleteTodo(c *gin.Context) {
 		return
 	}
 	idx := FindToDo(id)
-	if FindToDo(id) != -1 {
+	if idx != -1 {
 		models.Todos = slices.Delete(models.Todos, idx, idx+1)
 		c.Status(http.StatusNoContent)
 		return
