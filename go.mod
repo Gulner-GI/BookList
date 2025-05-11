@@ -1,4 +1,4 @@
-module github.com/Gulner-GI/My_Very_First_Project
+module github.com/Gulner-GI/ToDoApp
 
 go 1.23.2
 

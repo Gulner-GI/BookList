@@ -1,4 +1,4 @@
-package main
+package models
 
 type Todo struct {
 	ID   int    `json:"id"`
@@ -6,6 +6,6 @@ type Todo struct {
 	Done bool   `json:"done"`
 }
 
-var todos = []Todo{
+var Todos = []Todo{
 	{ID: 1, Task: "Learn Go", Done: false},
 }
