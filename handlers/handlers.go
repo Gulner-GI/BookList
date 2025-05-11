@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"slices"
 	"strconv"
 
 	"github.com/Gulner-GI/ToDoApp/models"
@@ -9,7 +10,31 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func FindToDo(id int) (idx int) {
+	for i := range models.Todos {
+		if models.Todos[i].ID == id {
+			return i
+		}
+	}
+	return -1
+}
+
 func GetTodos(c *gin.Context) {
+	idParam := c.Query("id")
+	if idParam != "" {
+		id, err := strconv.Atoi(idParam)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+			return
+		}
+		idx := FindToDo(id)
+		if idx != -1 {
+			c.JSON(http.StatusOK, models.Todos[idx])
+			return
+		}
+		c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
+		return
+	}
 	c.JSON(http.StatusOK, models.Todos)
 }
 
@@ -31,20 +56,21 @@ func UpdateTodo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
-
-	var updatedTodo models.Todo
+	var updatedTodo models.Update
 	if err := c.ShouldBindJSON(&updatedTodo); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	for i, t := range models.Todos {
-		if t.ID == id {
-			models.Todos[i].Task = updatedTodo.Task
-			models.Todos[i].Done = updatedTodo.Done
-			c.JSON(http.StatusOK, models.Todos[i])
-			return
+	idx := FindToDo(id)
+	if idx != -1 {
+		if updatedTodo.Task != nil {
+			models.Todos[idx].Task = *updatedTodo.Task
 		}
+		if updatedTodo.Done != nil {
+			models.Todos[idx].Done = *updatedTodo.Done
+		}
+		c.JSON(http.StatusOK, models.Todos[idx])
+		return
 	}
 	c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
 }
@@ -56,13 +82,11 @@ func DeleteTodo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
-
-	for i, t := range models.Todos {
-		if t.ID == id {
-			models.Todos = append(models.Todos[:i], models.Todos[i+1:]...)
-			c.Status(http.StatusNoContent)
-			return
-		}
+	idx := FindToDo(id)
+	if FindToDo(id) != -1 {
+		models.Todos = slices.Delete(models.Todos, idx, idx+1)
+		c.Status(http.StatusNoContent)
+		return
 	}
 	c.JSON(http.StatusNotFound, gin.H{"error": "Todo not found"})
 }

@@ -9,3 +9,8 @@ type Todo struct {
 var Todos = []Todo{
 	{ID: 1, Task: "Learn Go", Done: false},
 }
+
+type Update struct {
+	Task *string `json:"task"`
+	Done *bool   `json:"done"`
+}
