@@ -9,6 +9,8 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.GET("/todos", handlers.GetTodos)
+	r.HEAD("/todos", handlers.HeadTodos)
+	r.OPTIONS("/todos", handlers.OptionsTodos)
 	r.POST("/todos", handlers.CreateTodo)
 	r.PATCH("/todos/:id", handlers.UpdateTodo)
 	r.DELETE("/todos/:id", handlers.DeleteTodo)

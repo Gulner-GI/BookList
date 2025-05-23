@@ -38,6 +38,18 @@ func GetTodos(c *gin.Context) {
 	c.JSON(http.StatusOK, models.Todos)
 }
 
+func HeadTodos(c *gin.Context) {
+	GetTodos(c)
+	c.Writer.WriteHeaderNow()
+	c.Writer.Flush()
+}
+
+func OptionsTodos(c *gin.Context) {
+	c.Header("Allow", "GET, HEAD, POST, PATCH, DELETE, OPTIONS")
+	c.Header("Access-Control-Allow-Methods", "GET, HEAD, POST, PATCH, DELETE, OPTIONS")
+	c.Status(http.StatusOK)
+}
+
 func CreateTodo(c *gin.Context) {
 	var newTodo models.Todo
 	if err := c.ShouldBindJSON(&newTodo); err != nil {
