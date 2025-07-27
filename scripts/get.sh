@@ -1,5 +1,3 @@
-#!/bin/bash
-
 BASE_URL="http://localhost:8080/todos"
 
 if [ -z "$1" ]; then

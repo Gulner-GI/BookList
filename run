@@ -1,0 +1,15 @@
+#!/bin/bash
+
+CMD="$1"
+shift
+
+SCRIPT="./scripts/$CMD.sh"
+
+if [ -f "$SCRIPT" ]; then
+    chmod +x "$SCRIPT"
+    exec "$SCRIPT" "$@"
+else
+    echo "Команда '$CMD' не найдена."
+    echo ""
+    exit 1
+fi
