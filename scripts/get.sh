@@ -1,4 +1,4 @@
-BASE_URL="http://localhost:8080/todos"
+BASE_URL="http://localhost:8080/books"
 
 if [ -z "$1" ]; then
   curl -s -X GET "$BASE_URL"

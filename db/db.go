@@ -18,10 +18,13 @@ func InitDB(filepath string) {
 	}
 
 	createTable := `
-	CREATE TABLE IF NOT EXISTS todos (
+	CREATE TABLE IF NOT EXISTS books (
 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		task TEXT NOT NULL,
-		done BOOLEAN NOT NULL CHECK (done IN (0,1))
+		title TEXT NOT NULL,
+		year INTEGER NOT NULL,
+		genre TEXT CHECK(genre IN ('Fantasy', 'Non-Fiction', 'Sci-Fi', 'Science')),
+		status BOOLEAN NOT NULL CHECK (status IN (0,1)),
+		link TEXT
 	);`
 
 	_, err = DB.Exec(createTable)

@@ -1,13 +1,27 @@
-BASE_URL="http://localhost:8080/todos"
+BASE_URL="http://localhost:8080/books"
 
-if [ "$#" -ne 2 ]; then
-  echo "Использование: $0 <task> <done>"
+if [ "$#" -lt 4 ]; then
+  echo "Использование: $0 <title> <year> <genre> <status> [link]"
   exit 1
 fi
 
-task="$1"
-done="$2"
+title="$1"
+year="$2"
+genre="$3"
+status="$4"
+link="$5"
+
+json_body='{
+  "title": "'"$title"'", 
+  "year": '"$year"', 
+  "genre": "'"$genre"'", 
+  "status": "'"$status"'"'
+
+if [ -n "$link" ]; then 
+  json_body+=',"link": "'"$link"'"'
+fi
+json_body+='}'
 
 curl -s -X POST -H "Content-Type: application/json" \
-  -d '{"task": "'"$task"'", "done": '"$done"'}' \
+  -d "$json_body" \
   "$BASE_URL"

@@ -1,4 +1,4 @@
-BASE_URL="http://localhost:8080/todos"
+BASE_URL="http://localhost:8080/books"
 
 if [ "$#" -ne 1 ]; then
   echo "Использование: $0 <id>"

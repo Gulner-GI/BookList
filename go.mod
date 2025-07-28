@@ -1,4 +1,4 @@
-module github.com/Gulner-GI/ToDoApp
+module github.com/Gulner-GI/BookList
 
 go 1.23.2
 
