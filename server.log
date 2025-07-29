@@ -1,0 +1,104 @@
+2025/07/28 22:16:16 logger.go:15: Запуск сервера на :8080
+2025/07/28 22:16:16 handlers.go:53: Запрос на получение всех книг
+2025/07/28 22:16:16 handlers.go:77: Получено книг: 1
+2025/07/28 22:16:19 handlers.go:53: Запрос на получение всех книг
+2025/07/28 22:16:19 handlers.go:77: Получено книг: 1
+2025/07/28 22:16:54 logger.go:15: Запуск сервера на :8080
+2025/07/29 09:51:57 logger.go:15: Запуск сервера на :8080
+2025/07/29 09:51:57 handlers.go:53: Запрос на получение всех книг
+2025/07/29 09:51:57 handlers.go:77: Получено книг: 1
+2025/07/29 09:52:19 handlers.go:121: Книга успешно добавлена с ID 4
+2025/07/29 09:52:24 handlers.go:206: Запрос на удаление книги с ID: 2
+2025/07/29 09:52:24 handlers.go:224: Книга с ID 2 успешно удалена
+2025/07/29 09:52:27 handlers.go:30: Поиск книги с ID: 4
+2025/07/29 09:52:27 handlers.go:48: Книга найдена: {ID:4 Title:AnothErBokK Year:2034 Genre:Sci-Fi Status:false StatusText:in process Link:<nil>}
+2025/07/29 09:55:06 handlers.go:53: Запрос на получение всех книг
+2025/07/29 09:55:06 handlers.go:77: Получено книг: 1
+2025/07/29 09:55:13 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:0xc0002271f0 Year:<nil> Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 09:55:13 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Sci-Fi status:false title:NEWTITLE year:2034]
+2025/07/29 09:55:37 handlers.go:135: Ошибка парсинга JSON для обновления книги ID 4: json: cannot unmarshal bool into Go struct field Update.year of type int
+2025/07/29 09:56:11 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:0xc000227510 Year:0xc000202a40 Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 09:56:11 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Sci-Fi status:false title:wrgewtret year:202020]
+2025/07/29 09:56:37 handlers.go:53: Запрос на получение всех книг
+2025/07/29 09:56:37 handlers.go:77: Получено книг: 1
+2025/07/29 09:56:49 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:0xc000114530 Year:<nil> Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 09:56:49 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Sci-Fi status:false title:true year:202020]
+2025/07/29 10:12:37 logger.go:15: Запуск сервера на :8080
+2025/07/29 10:12:39 handlers.go:53: Запрос на получение всех книг
+2025/07/29 10:12:39 handlers.go:77: Получено книг: 1
+2025/07/29 10:22:15 logger.go:15: Запуск сервера на :8080
+2025/07/29 10:22:17 handlers.go:53: Запрос на получение всех книг
+2025/07/29 10:22:17 handlers.go:77: Получено книг: 1
+2025/07/29 11:11:23 logger.go:15: Запуск сервера на :8080
+2025/07/29 11:11:27 handlers.go:53: Запрос на получение всех книг
+2025/07/29 11:11:27 handlers.go:77: Получено книг: 1
+2025/07/29 11:15:22 logger.go:15: Запуск сервера на :8080
+2025/07/29 11:18:04 handlers.go:53: Запрос на получение всех книг
+2025/07/29 11:18:04 handlers.go:77: Получено книг: 1
+2025/07/29 11:19:26 handlers.go:135: Ошибка парсинга JSON для обновления книги ID 4: invalid character '\n' in string literal
+2025/07/29 11:19:46 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:0xc000238320 Year:<nil> Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 11:19:46 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Sci-Fi status:false title:new year:202020]
+2025/07/29 11:20:20 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:<nil> Year:<nil> Genre:0xc00011e350 Status:<nil> Link:<nil>}
+2025/07/29 11:20:20 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Science status:false title:new year:202020]
+2025/07/29 11:20:39 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:<nil> Year:<nil> Genre:<nil> Status:<nil> Link:0xc00011e620}
+2025/07/29 11:20:39 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Science link:chatgpt.com status:false title:new year:202020]
+2025/07/29 11:22:00 handlers.go:30: Поиск книги с ID: 4
+2025/07/29 11:22:00 handlers.go:48: Книга найдена: {ID:4 Title:new Year:202020 Genre:Science Status:false StatusText:in process Link:0xc0002390c0}
+2025/07/29 11:22:56 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:0xc00011e940 Year:<nil> Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 11:22:56 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Science link:chatgpt.com status:false title:another year:202020]
+2025/07/29 11:24:53 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:<nil> Year:<nil> Genre:<nil> Status:<nil> Link:0xc00003d700}
+2025/07/29 11:24:53 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Science link:https://chatgpt.com status:false title:another year:202020]
+2025/07/29 11:25:12 handlers.go:139: Обновление книги с ID 4, входящие данные: {Title:0xc00003da20 Year:<nil> Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 11:25:12 handlers.go:194: Книга ID 4 успешно обновлена: map[genre:Science link:https://chatgpt.com status:false title:two words year:202020]
+2025/07/29 11:25:24 handlers.go:53: Запрос на получение всех книг
+2025/07/29 11:25:24 handlers.go:77: Получено книг: 1
+2025/07/29 11:25:52 handlers.go:103: Попытка добавить книгу с некорректным жанром: Phantasy
+2025/07/29 11:26:10 handlers.go:98: Ошибка парсинга JSON для новой книги: invalid character 'a' after object key:value pair
+2025/07/29 11:35:53 handlers.go:103: Попытка добавить книгу с некорректным жанром: true
+2025/07/29 11:36:22 handlers.go:121: Книга успешно добавлена с ID 5
+2025/07/29 11:38:14 handlers.go:139: Обновление книги с ID 5, входящие данные: {Title:0xc000239330 Year:<nil> Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 11:38:14 handlers.go:194: Книга ID 5 успешно обновлена: map[genre:Non-Fiction link:https://www.litres.ru/book/fredrik-bakman/trevozhnye-ludi-63028197 status:false title:Folk med angest year:2019]
+2025/07/29 11:39:44 logger.go:15: Запуск сервера на :8080
+2025/07/29 11:39:47 handlers.go:53: Запрос на получение всех книг
+2025/07/29 11:39:47 handlers.go:77: Получено книг: 2
+2025/07/29 12:39:12 logger.go:15: Запуск сервера на :8080
+2025/07/29 12:39:15 handlers.go:53: Запрос на получение всех книг
+2025/07/29 12:39:15 handlers.go:77: Получено книг: 2
+2025/07/29 14:13:21 logger.go:15: Запуск сервера на :8080
+2025/07/29 14:14:32 handlers.go:44: Поиск книги с ID: 5
+2025/07/29 14:14:32 handlers.go:62: Книга найдена: {ID:5 Title:Folk med angest Year:2019 Genre:Non-Fiction Status:false StatusText:in process Link:0xc00057c070}
+2025/07/29 14:16:09 handlers.go:160: Книга успешно добавлена с ID 6
+2025/07/29 14:17:00 handlers.go:117: OPTIONS-запрос к /books
+2025/07/29 14:17:31 handlers.go:103: HEAD-запрос к /books
+2025/07/29 14:17:31 handlers.go:33: HEAD-запрос к /books
+2025/07/29 14:17:33 handlers.go:103: HEAD-запрос к /books
+2025/07/29 14:17:33 handlers.go:33: HEAD-запрос к /books
+2025/07/29 14:18:46 logger.go:15: Запуск сервера на :8080
+2025/07/29 14:20:22 logger.go:15: Запуск сервера на :8080
+2025/07/29 14:47:44 handlers.go:191: Обновление книги с ID 5, входящие данные: {Title:0xc000562280 Year:0xc00055e290 Genre:0xc000562260 Status:0xc00055e286 Link:0xc000562270}
+2025/07/29 14:47:44 handlers.go:246: Книга ID 5 успешно обновлена: map[genre:Science link:string status:true title:string year:0]
+2025/07/29 14:49:55 handlers.go:191: Обновление книги с ID 5, входящие данные: {Title:0xc000562d80 Year:0xc00055e330 Genre:0xc000562d60 Status:0xc00055e326 Link:0xc000562d70}
+2025/07/29 14:49:55 handlers.go:219: Попытка обновить книгу ID 5 с некорректным жанром: 
+2025/07/29 14:53:16 logger.go:15: Запуск сервера на :8080
+2025/07/29 14:54:10 handlers.go:67: Запрос на получение всех книг
+2025/07/29 14:54:10 handlers.go:91: Получено книг: 3
+2025/07/29 14:55:02 handlers.go:191: Обновление книги с ID 4, входящие данные: {Title:0xc000668770 Year:0xc00065c808 Genre:0xc000668750 Status:0xc00065c800 Link:0xc000668760}
+2025/07/29 14:55:02 handlers.go:219: Попытка обновить книгу ID 4 с некорректным жанром: string
+2025/07/29 14:55:16 handlers.go:191: Обновление книги с ID 4, входящие данные: {Title:0xc000238db0 Year:0xc00024b330 Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 14:55:16 handlers.go:246: Книга ID 4 успешно обновлена: map[genre:Science link:https://chatgpt.com status:false title:newnewnew year:0]
+2025/07/29 14:56:39 handlers.go:44: Поиск книги с ID: 4
+2025/07/29 14:56:39 handlers.go:62: Книга найдена: {ID:4 Title:newnewnew Year:0 Genre:Science Status:false StatusText:in process Link:0xc000668080}
+2025/07/29 14:56:55 handlers.go:191: Обновление книги с ID 4, входящие данные: {Title:<nil> Year:0xc00065c330 Genre:<nil> Status:<nil> Link:<nil>}
+2025/07/29 14:56:55 handlers.go:246: Книга ID 4 успешно обновлена: map[genre:Science link:https://chatgpt.com status:false title:newnewnew year:12849]
+2025/07/29 14:57:07 handlers.go:44: Поиск книги с ID: 4
+2025/07/29 14:57:07 handlers.go:62: Книга найдена: {ID:4 Title:newnewnew Year:12849 Genre:Science Status:false StatusText:in process Link:0xc000668600}
+2025/07/29 15:13:48 logger.go:15: Запуск сервера на :8080
+2025/07/29 15:13:58 handlers.go:44: Поиск книги с ID: 4
+2025/07/29 15:13:58 handlers.go:62: Книга найдена: {ID:4 Title:newnewnew Year:12849 Genre:Science Status:false StatusText:in process Link:0xc00003d650}
+2025/07/29 15:14:02 handlers.go:67: Запрос на получение всех книг
+2025/07/29 15:14:02 handlers.go:91: Получено книг: 3
+2025/07/29 15:16:24 logger.go:15: Запуск сервера на :8080
+2025/07/29 15:16:42 handlers.go:67: Запрос на получение всех книг
+2025/07/29 15:16:42 handlers.go:91: Получено книг: 3
+2025/07/29 17:35:09 logger.go:15: Запуск сервера на :8080
+2025/07/29 17:47:18 logger.go:15: Запуск сервера на :8080

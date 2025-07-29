@@ -1,0 +1,215 @@
+basePath: /
+definitions:
+  models.Book:
+    properties:
+      genre:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      status:
+        type: string
+      title:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.ErrorResponse400:
+    properties:
+      message:
+        example: Некорректный ID
+        type: string
+    type: object
+  models.ErrorResponse404:
+    properties:
+      message:
+        example: Книга не найдена
+        type: string
+    type: object
+  models.ErrorResponse500:
+    properties:
+      message:
+        example: Внутренняя ошибка сервера
+        type: string
+    type: object
+  models.Update:
+    properties:
+      genre:
+        type: string
+      link:
+        type: string
+      status:
+        type: boolean
+      title:
+        type: string
+      year:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: yura.kuzin1990@gmail.com
+    name: Gulner
+  description: RESTful API on gin and SQLite3 for listing books
+  termsOfService: http://swagger.io/terms/
+  title: BookList API
+  version: "0.3"
+paths:
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: Получает список всех книг, либо конкретную книгу по ID
+      parameters:
+      - description: ID книги для поиска
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Если ID не указан — возвращается список всех книг
+          schema:
+            items:
+              $ref: '#/definitions/models.Book'
+            type: array
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/models.ErrorResponse400'
+        "404":
+          description: Книга не найдена
+          schema:
+            $ref: '#/definitions/models.ErrorResponse404'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/models.ErrorResponse500'
+      summary: Получение книг
+      tags:
+      - books
+    head:
+      description: Возвращает только заголовки, без тела. Используется для проверки
+        доступности /books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: HEAD-запрос для проверки доступности ресурса
+      tags:
+      - books
+    options:
+      description: Возвращает список доступных методов
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: OPTIONS-запрос к /books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Добавляет книгу в базу данных. Поле link опционально, можно удалить
+      parameters:
+      - description: Данные новой книги
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/models.ErrorResponse400'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/models.ErrorResponse500'
+      summary: Добавить новую книгу
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      description: Удаляет книгу из базы данных по её ID
+      parameters:
+      - description: ID книги
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: Книга удалена
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/models.ErrorResponse400'
+        "404":
+          description: Книга не найдена
+          schema:
+            $ref: '#/definitions/models.ErrorResponse404'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/models.ErrorResponse500'
+      summary: Удалить книгу
+      tags:
+      - books
+    patch:
+      consumes:
+      - application/json
+      description: 'Обновляет информацию о книге. Все поля опциональны (удалите нежелательные).
+        Жанр должен быть из допустимого списка: Fantasy, Sci-FI, Science, Non-Fiction'
+      parameters:
+      - description: ID книги
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Данные для обновления книги
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.Update'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Обновлённая книга
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Некорректный ID
+          schema:
+            $ref: '#/definitions/models.ErrorResponse400'
+        "404":
+          description: Книга не найдена
+          schema:
+            $ref: '#/definitions/models.ErrorResponse404'
+        "500":
+          description: Внутренняя ошибка сервера
+          schema:
+            $ref: '#/definitions/models.ErrorResponse500'
+      summary: Обновить книгу
+      tags:
+      - books
+schemes:
+- http
+swagger: "2.0"
