@@ -10,6 +10,14 @@ type Book struct {
 	Link       *string `json:"link,omitempty"`
 }
 
+func (b *Book) SetStatusText() {
+	if b.Status {
+		b.StatusText = "completed"
+	} else {
+		b.StatusText = "in process"
+	}
+}
+
 type Update struct {
 	Title  *string `json:"title,omitempty"`
 	Year   *int    `json:"year,omitempty"`

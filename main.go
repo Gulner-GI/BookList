@@ -12,6 +12,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/Gulner-GI/BookList/config"
 	"github.com/Gulner-GI/BookList/db"
 	"github.com/Gulner-GI/BookList/loggers"
@@ -22,5 +24,9 @@ func main() {
 	loggers.InitLogger()
 	db.InitDB(config.DBPath)
 	r := routes.SetupRouter()
-	r.Run(config.Port)
+	if err := r.Run(config.Port); err != nil {
+		log.Fatalf("Ошибка при запуске сервера: %v", err)
+	}
+	defer db.DB.Close()
+	defer loggers.LogFile.Close()
 }

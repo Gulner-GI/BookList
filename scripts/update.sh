@@ -51,8 +51,6 @@ JSON="{"
 [ -n "$LINK" ]   && JSON+="\"link\":\"$LINK\","
 JSON="${JSON%,}}"
 
-echo "Отправка JSON: $JSON"
-
 curl -s -X PATCH "$BASE_URL/$ID" \
      -H "Content-Type: application/json" \
      -d "$JSON"

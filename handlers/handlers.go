@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/Gulner-GI/BookList/db"
 	"github.com/Gulner-GI/BookList/models"
@@ -29,16 +30,16 @@ import (
 // @Router /books [head]
 func FindBooks(c *gin.Context) {
 	idParam := c.Query("id")
-	if c.Request.Method == http.MethodHead {
-		log.Println("HEAD-запрос к /books")
-		c.Status(http.StatusOK)
-		return
-	}
 	if idParam != "" {
 		id, err := strconv.Atoi(idParam)
 		if err != nil {
 			log.Printf("Некорректный ID в запросе: %v", idParam)
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+			return
+		}
+		if id <= 0 {
+			log.Printf("ID должен быть положительным: %d", id)
+			c.JSON(http.StatusBadRequest, gin.H{"error": "ID must be positive"})
 			return
 		}
 		log.Printf("Поиск книги с ID: %d", id)
@@ -54,11 +55,7 @@ func FindBooks(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		if book.Status {
-			book.StatusText = "completed"
-		} else {
-			book.StatusText = "in process"
-		}
+		book.SetStatusText()
 		log.Printf("Книга найдена: %+v", book)
 		c.IndentedJSON(http.StatusOK, book)
 		return
@@ -81,11 +78,7 @@ func FindBooks(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		if book.Status {
-			book.StatusText = "completed"
-		} else {
-			book.StatusText = "in process"
-		}
+		book.SetStatusText()
 		books = append(books, book)
 	}
 	log.Printf("Получено книг: %d", len(books))
@@ -93,17 +86,15 @@ func FindBooks(c *gin.Context) {
 }
 
 // HeadBooks godoc
-// @Summary      HEAD-запрос для проверки доступности ресурса
-// @Description  Возвращает только заголовки, без тела. Используется для проверки доступности /books
+// @Summary      Проверка доступности ресурса
+// @Description  HEAD-запрос, который возвращает статус 200, если ресурс /books доступен
 // @Tags         books
 // @Produce      json
 // @Success      200 {string} string "OK"
 // @Router       /books [head]
 func HeadBooks(c *gin.Context) {
 	log.Println("HEAD-запрос к /books")
-	FindBooks(c)
-	c.Writer.WriteHeaderNow()
-	c.Writer.Flush()
+	c.Status(http.StatusOK)
 }
 
 // Options godoc
@@ -138,9 +129,19 @@ func AddBook(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	if newBook.Title == "" || newBook.Year == 0 {
+		log.Printf("Недостаточно данных для создания книги: %+v", newBook)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Title and Year are required"})
+		return
+	}
 	if !models.ValidGenres[newBook.Genre] {
 		log.Printf("Попытка добавить книгу с некорректным жанром: %s", newBook.Genre)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid genre"})
+		return
+	}
+	if newBook.Link != nil && !strings.HasPrefix(*newBook.Link, "http") {
+		log.Printf("Некорректная ссылка: %s", *newBook.Link)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid link format"})
 		return
 	}
 	result, err := db.DB.Exec("INSERT INTO books (title, year, genre, status, link) VALUES (?, ?, ?, ?, ?)",
@@ -180,6 +181,11 @@ func UpdateBook(c *gin.Context) {
 	if err != nil {
 		log.Printf("Некорректный ID для обновления: %v", idParam)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
+		return
+	}
+	if id <= 0 {
+		log.Printf("ID должен быть положительным: %d", id)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID must be positive"})
 		return
 	}
 	var update models.Update
@@ -227,7 +233,7 @@ func UpdateBook(c *gin.Context) {
 	}
 	_, err = db.DB.Exec(
 		"UPDATE books SET title = ?, year = ?, genre = ?, status = ?, link = ? WHERE id = ?",
-		currTitle, currYear, currGenre, currStatus.Bool, nullOrNil(currLink), id,
+		currTitle, currYear, currGenre, nullOrNilBool(currStatus), nullOrNil(currLink), id,
 	)
 	if err != nil {
 		log.Printf("Ошибка при обновлении книги ID %d: %v", id, err)
@@ -265,6 +271,11 @@ func DeleteBook(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid ID"})
 		return
 	}
+	if id <= 0 {
+		log.Printf("ID должен быть положительным: %d", id)
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ID must be positive"})
+		return
+	}
 	log.Printf("Запрос на удаление книги с ID: %d", id)
 	result, err := db.DB.Exec("DELETE FROM books WHERE id = ?", id)
 	if err != nil {
@@ -273,23 +284,11 @@ func DeleteBook(c *gin.Context) {
 		return
 	}
 	rowsAffected, err := result.RowsAffected()
-	if err != nil {
-		log.Printf("Ошибка при проверке результата удаления книги с ID %d: %v", id, err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to check deletion result"})
-		return
-	}
-	if rowsAffected == 0 {
-		log.Printf("Книга с ID %d не найдена для удаления", id)
-		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found"})
+	if err != nil || rowsAffected == 0 {
+		log.Printf("Ошибка или книга с ID %d не найдена для удаления: %v", id, err)
+		c.JSON(http.StatusNotFound, gin.H{"error": "Book not found or deletion failed"})
 		return
 	}
 	log.Printf("Книга с ID %d успешно удалена", id)
 	c.Status(http.StatusNoContent)
-}
-
-func nullOrNil(s sql.NullString) any {
-	if s.Valid {
-		return s.String
-	}
-	return nil
 }

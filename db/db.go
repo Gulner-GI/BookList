@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -32,5 +31,5 @@ func InitDB(filepath string) {
 		log.Fatalf("Ошибка при создании таблицы: %v", err)
 	}
 
-	fmt.Println("База данных подключена и таблица создана (если её не было)")
+	log.Println("База данных подключена")
 }
